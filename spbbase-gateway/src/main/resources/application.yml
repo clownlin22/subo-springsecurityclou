@@ -1,0 +1,39 @@
+server:
+  port: 80
+spring:
+  application:
+    name: spbbase-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: web_route
+        order: 100
+        uri: http://localhost:8000
+        predicates:
+        - Path= /**
+      - id: spbbase-authcenter-web
+        uri: lb://spbbase-authcenter-web
+        predicates:
+        - Path=/spbbase-authcenter-web/**
+        filters:
+        - StripPrefix=1
+
+eureka:
+  client:
+    service-url:
+#      defaultZone: http:192.168.11.25:8100/eureka/
+#      defaultZone: http://erueka-master.superbio.cn:8100/eureka/,http://erueka-slave.superbio.cn:8101/eureka/
+      defaultZone: http://127.0.0.1:8100/eureka/
+  instance:
+    prefer-ip-address: true
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
