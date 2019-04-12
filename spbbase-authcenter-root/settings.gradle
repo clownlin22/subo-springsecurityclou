@@ -1,0 +1,2 @@
+rootProject.name = 'spbbase-authcenter-root'
+includeFlat 'spbbase-authcenter-vo','ceshidemo','spbbase-authcenter','spbbase-authcenter-service-api','spbbase-authcenter-web','spbbase-gateway'

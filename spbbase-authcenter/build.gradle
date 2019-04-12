@@ -1,0 +1,39 @@
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.6'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+buildscript {
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        jcenter()
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.boot:spring-boot-dependencies:2.0.1.RELEASE'
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE'
+    }
+}
+
+repositories {
+    maven { url "http://nexus3.superbio.cn:8081/repository/maven-public/" }
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+    jcenter()
+}
+
+dependencies {
+    compile('cn.superbio.spbbase:spbbase-core-backend:0.1.0-SNAPSHOT')
+    compile project(":spbbase-authcenter-service-api")
+
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client') {
+        exclude group: 'com.google.code.gson', module: 'gson'
+    }
+    compile 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}

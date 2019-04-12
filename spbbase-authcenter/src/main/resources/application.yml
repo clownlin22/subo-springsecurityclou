@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: spbbase-authcenter
+  #  liquibase:
+  #    enabled: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ceshispbbase?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: lin123
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      validation-query: SELECT 1
+server:
+  port: 0
+eureka:
+  client:
+    service-url:
+#      defaultZone:  http:192.168.11.25:8100/eureka/
+#      defaultZone: http://erueka-master.superbio.cn:8100/eureka/,http://erueka-slave.superbio.cn:8101/eureka/
+      defaultZone: http://127.0.0.1:8100/eureka/
+    enabled: true
+  instance:
+    prefer-ip-address: true
+swagger:
+  enabled: true

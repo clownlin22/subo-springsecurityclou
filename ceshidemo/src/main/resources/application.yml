@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: ceshidemo
+eureka:
+  client:
+    service-url:
+#     defaultZone: http:192.168.11.25:8100/eureka/
+#      defaultZone: http://erueka-master.superbio.cn:8100/eureka/,http://erueka-slave.superbio.cn:8101/eureka/
+      defaultZone: http://127.0.0.1:8100/eureka/
+    enabled: true
+  instance:
+    prefer-ip-address: true
+
+
+swagger:
+  enabled: true
+  base-package: cn.superbio.spbbase.authcenter.controller
+server:
+  port: 8066

@@ -1,0 +1,52 @@
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.6'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+buildscript {
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        jcenter()
+    }
+}
+
+apply plugin: 'java'
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+    jcenter()
+}
+
+dependencies {
+}
+
+subprojects {
+    // 发布jar包到本地Maven仓库
+    apply plugin: 'maven-publish'
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                //若是war包，就写components.web,若是jar包，就写components.java
+                from components.java
+            }
+        }
+
+        repositories {
+            maven {
+                def releasesRepoUrl = "http://nexus3.superbio.cn:8081/repository/maven-releases/"
+                def snapshotsRepoUrl = "http://nexus3.superbio.cn:8081/repository/maven-snapshots/"
+                url project.version.endsWith('-SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+                credentials {
+                    username 'user'
+                    password '1q2w3e4r'
+                }
+            }
+        }
+    }
+
+    configurations.all {
+        // check for updates every build
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+}
